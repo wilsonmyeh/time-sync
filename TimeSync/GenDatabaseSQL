@@ -1,0 +1,26 @@
+DROP TABLE IF EXISTS groups,users;
+
+CREATE TABLE groups {
+	groupId int NOT NULL AUTO_INCREMENT,
+	hostHash varchar(255) NOT NULL,
+	linkHash varchar(255) NOT NULL,
+	meetStart datetime NOT NULL,
+	meetEnd datetime NOT NULL,
+	meetLength int NOT NULL,
+	PRIMARY KEY (groupId)
+};
+
+CREATE TABLE users {
+	userId int NOT NULL AUTO INCREMENT,
+	groupId int NOT NULL,
+	name varchar(255) NOT NULL,
+	email varchar(255) NOT NULL,
+	calendarFile varchar(255) NOT NULL,
+	FOREIGN KEY (groupId)
+		REFERENCES groups(groupId)
+		ON DELETE CASCADE
+};
+
+CREATE INDEX host_index ON groups(host_hash);
+CREATE INDEX link_index ON groups(link_hash);
+CREATE INDEX group_index ON users(groupId);
